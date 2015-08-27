@@ -1,0 +1,99 @@
+#macro(page $bodyPath $jsPath $cssPath $table)
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理系统</title>
+    <link rel="shortcut icon" href="$request.contextPath/static/img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="$request.contextPath/static/css/bootstrap.min.css">
+
+    #if($table)
+        <link rel="stylesheet" href="$request.contextPath/static/css/bootstrap-table.min.css">
+    #end
+    #if($cssPath == "login.css")
+        <link rel="stylesheet" href="$request.contextPath/static/css/lab/$cssPath">
+    #else
+        <link rel="stylesheet" href="$request.contextPath/static/css/lab/common.css">
+        #if($cssPath)
+            <link rel="stylesheet" href="$request.contextPath/static/css/lab/$cssPath">
+        #end
+    #end
+    <!--[if lt IE 9]>
+        <script src="$request.contextPath/static/js/html5shiv.min.js"></script>
+        <script src="$request.contextPath/static/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    #if($bodyPath)
+        #parse("container/$bodyPath")
+    #end
+    <!-- 服务器路径 -->
+    <input type="hidden" value="$request.contextPath" id="contextPath">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script type="text/javascript" src="$request.contextPath/static/js/jquery-1.11.3.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script type="text/javascript" src="$request.contextPath/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="$request.contextPath/static/js/bootbox.min.js"></script>
+    #if($table)
+        <script type="text/javascript" src="$request.contextPath/static/js/bootstrap-table.min.js"></script>
+        <script type="text/javascript" src="$request.contextPath/static/js/bootstrap-table-zh-CN.min.js"></script>
+    #end
+    <script type="text/javascript" src="$request.contextPath/static/js/lab/common.js"></script>
+    #if($jsPath)
+        <script type="text/javascript" src="$request.contextPath/static/js/lab/$jsPath"></script>
+    #end
+</body>
+</html>
+#end
+
+#macro(header)
+    <div class="navbar navbar-default header" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand">
+                    <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span><p>实验室管理系统</p>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <a class="navbar-brand" href="javascript:void(0);" id="userButtom" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <p>fuzhong</p>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userButtom" style="min-width: 90px;">
+                    <li><a id="userButtom-li" href="javascript:void(0);">用户资料</a></li>
+                    <li><a href="$request.contextPath/logout">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+#end
+
+#macro(nav)
+    <div class="col-lg-2 col-xs-2 left-nav">
+        <ul class="nav">
+            #foreach($li in $tree)
+                <li>
+                    <a href="javascript:void(0);" class="dropdown-toggle">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                        <span class="menu-text text-tab">$li.name</span>
+                        <b class="float-right glyphicon glyphicon-chevron-right"></b>
+                    </a>
+                </li>
+                #if($li.children && $li.children.size() != 0)
+                    <ul class="nav submenu">
+                    #foreach($childli in $li.children)
+                        <li>
+                            <i class="vertical"><span class="line"></span></i>
+                            <a href="$request.contextPath$!childli.url?id=$childli.id" class="dropdown-toggle">
+                                <span class="menu-text text-tab">$childli.name</span>
+                            </a>
+                        </li>
+                    #end
+                    </ul>
+                #end
+            #end
+        </ul>
+    </div>
+#end

@@ -1,0 +1,8 @@
+body {background-color: #F5F5F5; font-family: 'Microsoft Yahei',Arial,'Hiragino Sans GB';}
+
+.header{background-color: #808080; border: none; border-radius: inherit; -moz-border-radius: inherit; -webkit-border-radius: inherit;}
+.header a, .header span, .header h4 {color: #FFFFFF;}
+.header p {float: right; color: #FFFFFF; font-size: 21px; margin-left: 5px;}
+
+.windows { width: 400px; margin-top: 150px; box-shadow: 2px 2px 3px rgba(50, 50, 50, 0.8); -webkit-box-shadow: 2px 2px 3px rgba(50, 50, 50, 0.8); -moz-box-shadow: 2px 2px 3px rgba(50, 50, 50, 0.8);}
+.center {margin-left: auto; margin-right: auto;}

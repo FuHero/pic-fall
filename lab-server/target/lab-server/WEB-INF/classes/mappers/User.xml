@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.server.lab.dao.UserDAO">
+
+    <insert id="create" parameterType="cn.server.lab.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO LAB_USER (USERNAME, PASSWORD, NAME, BIRTH_DATE, SEX, PHONE, ADDRESS, REMARK, ARRAY_ROLE_ID, ADD_TIME, ISLOCK, ISDELETE)
+        VALUES (#{username}, #{password}, #{name}, #{birth}, #{sex}, #{phone}, #{address}, #{remark}, #{arrayRoleId}, NOW(), FALSE, FALSE)
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM LAB_USER where ID = #{id}
+    </delete>
+
+    <update id="update"  parameterType="cn.server.lab.entity.User">
+        UPDATE LAB_USER
+        <set>
+            <if test=" password!=null and ''!=password "> PASSWORD = #{password}, </if>
+            <if test=" name!=null and ''!=name "> NAME = #{name}, </if>
+            <if test=" birth!=null and ''!=birth "> BIRTH_DATE = #{birth}, </if>
+            <if test=" sex!=null and ''!=sex "> SEX = #{sex}, </if>
+            <if test=" phone!=null and ''!=phone "> PHONE = #{phone}, </if>
+            <if test=" address!=null and ''!=address "> ADDRESS = #{address}, </if>
+            <if test=" remark!=null and ''!=remark "> REMARK = #{remark}, </if>
+            <if test=" arrayRoleId!=null and ''!=arrayRoleId "> ARRAY_ROLE_ID = #{arrayRoleId}, </if>
+            <if test=" isLock!=null "> ISLOCK = #{isLock}, </if>
+            <if test=" isDelete!=null "> ISDELETE = #{isDelete}, </if>
+        </set>
+        <where>
+            ID = #{id}
+        </where>
+    </update>
+
+    <!-- #和$的区别：#{parameterName}引用参数的时候，Mybatis会把这个参数认为是一个字符串，尽量使用#来传参！ -->
+    <select id="query" parameterType="cn.server.lab.entity.in.InUser" resultType="cn.server.lab.entity.out.OutUser">
+        SELECT LAB_USER.ID id, LAB_USER.USERNAME username, LAB_USER.PASSWORD password, LAB_USER.NAME name,
+        DATE_FORMAT(LAB_USER.BIRTH_DATE, '%Y-%m-%d') birth, LAB_USER.PHONE phone, LAB_USER.ADDRESS address,
+        LAB_USER.REMARK remark, LAB_USER.SEX sex, LAB_USER.ARRAY_ROLE_ID arrayRoleId, LAB_USER.ISLOCK isLock,
+        LAB_USER.ISDELETE isDelete, DATE_FORMAT(LAB_USER.ADD_TIME, '%Y-%m-%d %H:%S') addTime,
+        FLOOR((TO_DAYS(NOW())-TO_DAYS(LAB_USER.BIRTH_DATE))/365) age FROM LAB_USER WHERE 1 = 1
+        <if test=" id!=null and ''!=id "> AND LAB_USER.ID = #{id} </if>
+        <if test=" username!=null and ''!=username "> AND LAB_USER.USERNAME = #{username} </if>
+        <if test=" password!=null and ''!=password "> AND LAB_USER.PASSWORD = #{password} </if>
+        <if test=" name!=null and ''!=name "> AND LAB_USER.NAME = #{name} </if>
+        <if test=" sex!=null and ''!=sex "> AND LAB_USER.SEX = #{sex} </if>
+        <if test=" phone!=null and ''!=phone "> AND LAB_USER.PHONE = #{phone} </if>
+        <if test="isLock != null "> AND LAB_USER.ISLOCK = #{isLock} </if>
+        <choose>
+            <when test="isDelete != null "> AND LAB_USER.ISDELETE = #{isDelete} </when>
+            <otherwise> AND LAB_USER.ISDELETE = FALSE </otherwise>
+        </choose>
+        <if test=" limit!=null and limit>0 "> limit #{offset}, #{limit} </if>
+    </select>
+
+    <select id="total" parameterType="cn.server.lab.entity.in.InUser" resultType="int">
+        SELECT COUNT(*) FROM LAB_USER WHERE 1 = 1
+        <if test=" id!=null and ''!=id "> AND LAB_USER.ID = #{id} </if>
+        <if test=" username!=null and ''!=username "> AND LAB_USER.USERNAME = #{username} </if>
+        <if test=" password!=null and ''!=password "> AND LAB_USER.PASSWORD = #{password} </if>
+        <if test=" name!=null and ''!=name "> AND LAB_USER.NAME = #{name} </if>
+        <if test=" sex!=null and ''!=sex "> AND LAB_USER.SEX = #{sex} </if>
+        <if test=" phone!=null and ''!=phone "> AND LAB_USER.PHONE = #{phone} </if>
+        <if test=" isLock != null "> AND LAB_USER.ISLOCK = #{isLock} </if>
+        <choose>
+            <when test="isDelete != null "> AND LAB_USER.ISDELETE = #{isDelete} </when>
+            <otherwise> AND LAB_USER.ISDELETE = FALSE </otherwise>
+        </choose>
+    </select>
+
+</mapper>

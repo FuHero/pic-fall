@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.server.lab.dao.RoleDAO">
+
+    <insert id="create" parameterType="cn.server.lab.entity.Role" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO LAB_ROLE (NAME, DESCR, REMARK, ADD_TIME, ARRAY_PERMISSION_ID, CREATE_USER_ID)
+        VALUES (#{name}, #{descr}, #{remark}, NOW(), #{arrayPermissionId}, #{createUserId})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM LAB_ROLE where ID = #{id}
+    </delete>
+
+    <update id="update"  parameterType="cn.server.lab.entity.Role">
+        UPDATE LAB_ROLE
+        <set>
+            <if test=" descr!=null and ''!=descr "> DESCR = #{descr}, </if>
+            <if test=" remark!=null and ''!=remark "> REMARK = #{remark}, </if>
+            <if test=" arrayPermissionId!=null and ''!=arrayPermissionId "> ARRAY_PERMISSION_ID = #{arrayPermissionId}, </if>
+            <if test=" createUserId!=null and ''!=createUserId "> CREATE_USER_ID = #{createUserId}, </if>
+        </set>
+        <where>
+            ID = #{id}
+        </where>
+    </update>
+
+    <select id="query" parameterType="cn.server.lab.entity.in.InRole" resultType="cn.server.lab.entity.out.OutRole">
+        SELECT LAB_ROLE.ID id, LAB_ROLE.NAME name, LAB_ROLE.DESCR descr, LAB_ROLE.REMARK remark,
+        DATE_FORMAT(LAB_ROLE.ADD_TIME, '%Y-%m-%d %H:%S') addTime, LAB_ROLE.ARRAY_PERMISSION_ID arrayPermissionId,
+        LAB_ROLE.CREATE_USER_ID createUserId, LAB_USER.NAME createUserName
+        FROM LAB_ROLE LEFT OUTER JOIN LAB_USER ON LAB_ROLE.CREATE_USER_ID = LAB_USER.ID WHERE 1 = 1
+        <if test=" id!=null and ''!=id "> AND LAB_ROLE.ID = #{id} </if>
+        <if test=" createUserName!=null and ''!=createUserName "> AND LAB_USER.NAME = #{createUserName} </if>
+        <if test=" name!=null and ''!=name "> AND LAB_ROLE.NAME = #{name} </if>
+        <if test=" limit!=null and limit>0 "> limit #{offset}, #{limit} </if>
+    </select>
+
+    <select id="total" parameterType="cn.server.lab.entity.in.InRole" resultType="int">
+        SELECT COUNT(1) FROM LAB_ROLE LEFT OUTER JOIN LAB_USER ON LAB_ROLE.CREATE_USER_ID = LAB_USER.ID WHERE 1 = 1
+        <if test=" id!=null and ''!=id "> AND LAB_ROLE.ID = #{id} </if>
+        <if test=" createUserName!=null and ''!=createUserName "> AND LAB_USER.NAME = #{createUserName} </if>
+        <if test=" name!=null and ''!=name "> AND LAB_ROLE.NAME = #{name} </if>
+    </select>
+
+</mapper>

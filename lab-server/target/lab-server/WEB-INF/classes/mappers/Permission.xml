@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.server.lab.dao.PermissionDAO">
+    <resultMap type="cn.server.lab.entity.out.OutPermission" id="permissionMap">
+        <id column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="PERMISSION_NAME" property="permissionName" />
+        <result column="URL" property="url" />
+        <result column="SEQUENCE" property="sequence" />
+        <result column="TYPE" property="type" />
+        <result column="PARENT_ID" property="parentId" />
+        <collection property="children" column="ID" select="queryByParentID" />
+    </resultMap>
+
+    <select id="queryTreeModel" parameterType="String" resultMap="permissionMap">
+        SELECT PER.ID, PER.NAME, PER.PERMISSION_NAME, PER.URL, PER.SEQUENCE, PER.TYPE, PER.PARENT_ID FROM LAB_PERMISSION PER
+        <where>
+            <choose>
+                <when test="parentId!=null and ''!=parentId "> PER.PARENT_ID = #{parentId} </when>
+                <otherwise> PER.PARENT_ID IS NULL </otherwise>
+            </choose>
+            AND PER.VISIBLE = '1'
+        </where>
+        ORDER BY PER.SEQUENCE
+    </select>
+
+    <select id="queryByParentID" parameterType="String" resultMap="permissionMap">
+        SELECT * FROM LAB_PERMISSION
+        WHERE PARENT_ID = #{parentId} AND VISIBLE = '1'
+        ORDER BY SEQUENCE
+    </select>
+
+</mapper>
