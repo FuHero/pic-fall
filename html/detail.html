@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="../style/bootstrap.min.css" rel="stylesheet" />
+    <script src="../script/jquery-1.11.3.min.js"></script>
+    <script src="../script/bootstrap.min.js"></script>
+    <script src="../script/bootbox.min.js"></script>
+    <style>
+        html,body {padding: 0; margin: 0; background-color: #eeeeee; width: 100%; min-width: 1366px;}
+        .detail{margin: 10px auto; border: 1px solid #DDDDDD; box-shadow: 2px 2px 3px rgba(50, 50, 50, 0.4); width: 1000px; font-size: 12px; line-height: 18px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;}
+        .detail p {padding: 0; margin: 0; font-size: 14px; line-height: 24px;}
+        .no-bottom { margin-bottom: 0;}
+        .detail dt {width: 70px;}
+        .detail dd {margin-left: 80px; padding-right: 6px;}
+        .detail-img{margin: 0 auto; width: 1000px; text-align: center;}
+        .detail-img img{ width: 40px; margin: 0 auto; }
+
+        .search-input {margin: 0 auto; padding-top: 200px; padding-bottom: 500px; width: 1000px; font-size: 24px; line-height: 36px;}
+
+        .remark {width: 800px; font-size: 12px; line-height: 18px; margin: 0;}
+        .remark dt {width: 70px;}
+        .remark dd {margin-left: 80px; padding-right: 6px;}
+    </style>
+</head>
+<body id="id-str">
+    <div class="remark row">
+        <div class="col-xs-4 dl-horizontal"><dt>领取人电话</dt><dd>李开复的史莱克发生的房间开的说法</dd></div>
+        <div class="col-xs-4 dl-horizontal"><dt>领取人电话</dt><dd>李开复的史莱克发生的房间开的说法</dd></div>
+        <div class="col-xs-4 dl-horizontal"><dt>领取人电话</dt><dd>李开复的史莱克发生的房间开的说法</dd></div>
+        <div class="col-xs-4 dl-horizontal"><dt>领取人电话</dt><dd>李开复的史莱克发生的房间开的说法</dd></div>
+        <div class="col-xs-4 dl-horizontal"><dt>领取人电话</dt><dd>李开复的史莱克发生的房间开的说法</dd></div>
+
+    </div>
+
+    <!--<div class="search-input">-->
+        <!--<div class="input-group input-group-lg">-->
+            <!--<input type="text" class="form-control" placeholder="样品条码号">-->
+            <!--<div class="input-group-btn">-->
+                <!--<button class="btn btn-primary" type="button" id="searchBtn"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;搜&nbsp;&nbsp;&nbsp;索</button>-->
+            <!--</div>-->
+        <!--</div>&lt;!&ndash; /input-group &ndash;&gt;-->
+    <!--</div>-->
+
+    <script>
+        var device = {"obj":{"addTime":"2015-12-11 16:33","approver":"4234324","auditor":"4234234","barcode":"151211162901",
+            "bill":{"addTime":"2015-12-11 19:23","amount":800,"code":"201512111909001","customerName":"发生的发生地",
+                "customerPhone":"18615784640","id":"52","payRemark":"李开复的史莱克发生的房间开的说法","payTime":"2015-12-11 19:56",
+                "payType":"0","payUserId":"1","payUserName":"admin","remark":"的说法是大家分开了都是垃圾分类看了多少积分的实际付款了","status":"1",
+                "total":800,"userId":"1","userName":"admin"},"censorCost":"800.00","censorName":"符仲","censorOther":"速度开了房间看历史的积分看的是立即付款了劳动时间付款的时间反馈来了就死定了",
+            "censorPhone":"18615784640","censorResult":"法第四关键看理发的关键看理发","censorResultTime":"2015-12-11 18:39","censorTime":"2015-12-19 00:00","censorUserId":"1",
+            "censorUserName":"admin","code":"4564654654564","customerCompany":"成都初唐有限公司","customerName":"王车","customerPhone":"18312457841","depotId":"6","depotName":"第1仓库",
+            "file":"JDK_API_1_6_zh_CN - 副本.doc","id":"103","isDelete":false,"name":"46545646465456","receiptor":"fsdfs","receiptorTel":"18615784640",
+            "remark":"{\"tel\":\"5645646465\",\"factory\":\"速度快了几分的开始了减肥颗粒\",\"model\":\"收到付款了电视机\",\"level\":\"的书法家的开始了减肥\",\"other\":\"速度发几款是劳动法\"}",
+            "status":"4","type":"1","userId":"1","userName":"admin"},"state":true}
+
+        var data = device.obj;
+
+        $('#searchBtn').on('click', function() {
+            $("#searchBtn").closest(".search-input").css("padding-top","20px");
+            $("#id-str").append(deviceHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(validateHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(outDeviceHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(payHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(outBillHTML(data));
+            cleanUndefined();
+        });
+
+        display();
+
+        function display (){
+            $("#id-str").append(deviceHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(validateHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(outDeviceHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(payHTML(data));
+            $("#id-str").append('<div class="detail-img"><img src="../image/arrow.png"></div>');
+            $("#id-str").append(outBillHTML(data));
+            cleanUndefined();
+        }
+
+        function outBillHTML (data) {
+            var html = "";
+            var pay = data.bill;
+            html += '<div class="detail"><div class="panel panel-warning no-bottom"><div class="panel-heading"><p class="text-center">'+data.name+'——报告领取信息</p></div><div class="panel-body">';
+            html += '<ul class="list-inline row"><div class="col-xs-3 dl-horizontal"><dt>领取人姓名</dt><dd>'+pay.customerName+'</dd></div>';
+            html += '<div class="col-xs-3 dl-horizontal"><dt>领取人电话</dt><dd>'+pay.customerPhone+'</dd></div>';
+            html += '<div class="col-xs-3 dl-horizontal"><dt>登记用户</dt><dd>'+pay.payUserName+'</dd></div>';
+            html += '<div class="col-xs-3 dl-horizontal"><dt>登记时间</dt><dd>'+pay.payTime+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-12 dl-horizontal"><dt>备注</dt><dd>'+pay.remark+'</dd></div></ul>';
+            html += '</div></div></div>';
+            return html;
+        }
+
+        function payHTML (data) {
+            var html = "";
+            var pay = data.bill;
+            html += '<div class="detail"><div class="panel panel-warning no-bottom"><div class="panel-heading"><p class="text-center">'+data.name+'——付款信息</p></div><div class="panel-body">';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>应付金额</dt><dd>'+pay.total+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>实付金额</dt><dd>'+pay.amount+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>付款方式</dt><dd>'+anslysisPayType(pay.payType)+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>登记用户</dt><dd>'+pay.userName+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>转账编号</dt><dd>'+pay.billCode+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>付款时间</dt><dd>'+pay.addTime+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-12 dl-horizontal"><dt>备注</dt><dd>'+pay.payRemark+'</dd></div></ul>';
+            html += '</div></div></div>';
+            return html;
+        }
+
+        // 样品领取信息
+        function outDeviceHTML (data) {
+            var html = "";
+            html += '<div class="detail"><div class="panel panel-warning no-bottom"><div class="panel-heading"><p class="text-center">'+data.name+'——领取登记信息</p></div><div class="panel-body">';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>核验员</dt><dd>'+data.approver+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>批准员</dt><dd>'+data.auditor+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>登记员</dt><dd>'+data.censorUserName+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>领取人姓名</dt><dd>'+data.receiptor+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>领取人电话</dt><dd>'+data.receiptorTel+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>登记时间</dt><dd>'+data.censorResultTime+'</dd></div></ul>';
+            html += '</div></div></div>';
+            return html;
+        }
+
+        // 检测信息
+        function validateHTML (data) {
+            var html = "";
+            html += '<div class="detail"><div class="panel panel-warning no-bottom"><div class="panel-heading"><p class="text-center">'+data.name+'——检测结果</p></div><div class="panel-body">';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>检测员</dt><dd>'+data.censorName+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>检测员电话</dt><dd>'+data.censorPhone+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>检测时间</dt><dd>'+data.censorTime+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>检测费用</dt><dd>'+data.censorCost+'</dd></div>';
+            html += '<div class="col-xs-8 dl-horizontal"><dt>检测结果</dt><dd>'+data.censorResult+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-12 dl-horizontal"><dt>检测备注</dt><dd>'+data.censorOther+'</dd></div></ul>';
+            html += '</div></div></div>';
+            return html;
+        }
+
+        // 样品基本信息
+        function deviceHTML (data) {
+            var html = "";
+            var remark = jsonAttribute(data.remark);
+            html += '<div class="detail"><div class="panel panel-warning no-bottom"><div class="panel-heading"><p class="text-center">'+data.name+'——样品信息</p></div><div class="panel-body">';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>样品名称</dt><dd>'+data.name+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>编码</dt><dd>'+data.code+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>型号</dt><dd>'+remark.model+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>量级</dt><dd>'+remark.level+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>单位</dt><dd>'+data.customerCompany+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>厂家</dt><dd>'+remark.factory+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>送检人</dt><dd>'+data.customerName+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>送检人电话</dt><dd>'+data.customerPhone+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>座机号码</dt><dd>'+remark.tel+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>检测类型</dt><dd>'+analysisType(data.type)+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>检测员</dt><dd>'+data.censorName+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>检测员电话</dt><dd>'+data.censorPhone+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-4 dl-horizontal"><dt>登记员</dt><dd>'+data.userName+'</dd></div>';
+            html += '<div class="col-xs-4 dl-horizontal"><dt>送检日期</dt><dd>'+data.addTime+'</dd></div></ul>';
+            html += '<ul class="list-inline row"><div class="col-xs-12 dl-horizontal"><dt>备注</dt><dd>'+remark.other+'</dd></div></ul>';
+            html += '</div></div></div>';
+            return html;
+        }
+
+        function jsonAttribute (str) {
+            if (str) {
+                return JSON.parse(str);
+            }
+            return {};
+        }
+
+        function cleanUndefined () {
+            $(".detail dd").each(function() {
+                if ($(this).html() == "undefined") {
+                    $(this).html('无');
+                }
+            })
+        }
+
+        function anslysisPayType (value) {
+            return value == '0' ? '现金' : value == '1' ? '转账' : '未知';
+        }
+
+        function analysisType (value) {
+            return value == '1' ? '计量检测' : value == '2' ? '质量检测' : '未知';
+        }
+
+    </script>
+</body>
+</html>
